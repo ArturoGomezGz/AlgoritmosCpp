@@ -69,3 +69,13 @@ string HashMap::getIp(string line) {
 
     return ""; // Retorna una cadena vacía si no encuentra suficientes palabras
 }
+
+void HashMap::loadTxt(string file){
+    ifstream fileLine("./"+file+".txt");
+
+    string line;
+    while (getline(fileLine, line))
+    {
+        this->instert(line);
+    }
+}

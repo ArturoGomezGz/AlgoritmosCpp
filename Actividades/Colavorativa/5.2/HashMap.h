@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdexcept>
 #include "LinkedList.h"
+#include <fstream>
 
 struct MapNode
 {
@@ -72,6 +73,7 @@ public:
     void newIp(string ip);
     string getIp(string line);
     void print();
+    void loadTxt(string file);
 };
 
 #endif
