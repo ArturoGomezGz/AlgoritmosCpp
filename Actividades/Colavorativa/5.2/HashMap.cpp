@@ -27,12 +27,12 @@ void HashMap::instert(string line){
     newIp(ip);
 }
 
-void HashMap::newIp(string ip){
-    MapNode* node = new MapNode(ip);
-    if (this->isEmpty()){
+void HashMap::newIp(string ip) {
+    if (this->isEmpty()) {
+        // Directly initialize the keys when the map is empty
         this->keys = new MapNode(ip);
-        this->size++;
     } else {
+        MapNode* node = new MapNode(ip); // Create the new MapNode only when needed
         MapNode* current = this->keys;
         while (current->next != nullptr && current->next->ipLong < node->ipLong) {
             current = current->next;
@@ -40,7 +40,7 @@ void HashMap::newIp(string ip){
         node->next = current->next;
         current->next = node;
     }
-    this->size++;
+    this->size++; // Increment size regardless of the condition
 }
 
 void HashMap::print(){
