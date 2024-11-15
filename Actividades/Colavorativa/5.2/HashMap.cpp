@@ -1,0 +1,53 @@
+#include "HashMap.h"
+
+HashMap::HashMap(){
+    this->size = 0;
+    this->keys = nullptr;
+}
+
+int HashMap::lenght(){
+    return this->size;
+}
+
+bool HashMap::isEmpty(){
+    return this->size == 0;
+}
+
+void HashMap::instert(string line){
+
+}
+
+void HashMap::newIp(string ip){
+    MapNode* node = 
+    if (this->isEmpty()){
+        this->keys = new MapNode(ip);
+        this->size++;
+    } else {
+        MapNode* current = this->keys;
+        while (current != nullptr){
+            if (current->ipLong >= )
+
+            current = current->next;
+        }
+    }
+}
+
+
+string HashMap::getIp(string line) {
+    istringstream iss(line);
+    string word;
+    int wordCount = 0;
+
+    while (iss >> word) {
+        wordCount++;
+        if (wordCount == 4) { // El tercer espacio separa el 4to token
+            size_t colonPos = word.find(':');
+            if (colonPos != string::npos) {
+                return word.substr(0, colonPos); // Retorna solo la IP antes del ':'
+            }
+            return word; // Si no hay ':', regresa el token completo
+        }
+    }
+
+    return ""; // Retorna una cadena vacía si no encuentra suficientes palabras
+}
