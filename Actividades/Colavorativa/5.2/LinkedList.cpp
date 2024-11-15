@@ -1,20 +1,20 @@
 #include "LinkedList.h"
 
-LinkedList::LinkedList(){
+LinkedList::LinkedList() {
     this->size = 0;
     this->head = nullptr;
 }
 
-int LinkedList::length(){
+int LinkedList::length() {
     return this->size;
 }
 
-bool LinkedList::isEmpty(){
+bool LinkedList::isEmpty() {
     return this->size == 0;
 }
 
-void LinkedList::insert(string data){
-    Node* nodo = new Node(data); // Create a new node
+void LinkedList::insert(string data) {
+    Node* nodo = new Node(data);
     if (this->isEmpty()) {
         this->head = nodo;
     } else if (nodo->dateCompare < this->head->dateCompare) {
@@ -31,13 +31,10 @@ void LinkedList::insert(string data){
     this->size++;
 }
 
-void LinkedList::print(){
+void LinkedList::print() {
     Node* current = this->head;
-    while (current != nullptr)
-    {
+    while (current != nullptr) {
         current->print();
         current = current->next;
     }
 }
-
-

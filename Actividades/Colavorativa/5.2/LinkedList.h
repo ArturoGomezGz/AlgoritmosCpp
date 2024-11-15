@@ -8,8 +8,7 @@
 
 using namespace std;
 
-struct Node
-{
+struct Node {
     string month;
     int day;
     string time;
@@ -27,50 +26,47 @@ struct Node
         int minute = stoi(this->time.substr(3, 2));
         int second = stoi(this->time.substr(6, 2));
 
-        // Combinar todos los valores en una sola cifra para comparación
         this->dateCompare = monthValue * 100000000 + this->day * 1000000 +
                             hour * 10000 + minute * 100 + second;
     }
-    
-    // Método para separar y asignar los valores desde una línea de texto
+
     void separarLinea(const string& linea) {
         istringstream stream(linea);
         string dayStr;
 
-        getline(stream, this->month, ' '); 
+        getline(stream, this->month, ' ');
         getline(stream, dayStr, ' ');
         this->day = stoi(dayStr);
         getline(stream, this->time, ' ');
-        // Lo que queda después del tercer espacio se ignora
     }
 
     Node(string data, Node* next) {
         separarLinea(data);
         setDateCompare();
+        this->next = next;
     }
 
     Node(string data) : Node(data, nullptr) {}
 
-    string writeLine(){
+    string writeLine() {
         return month + " " + to_string(day) + " " + time;
     }
 
-    void print(){
+    void print() {
         cout << writeLine() << endl;
     }
 };
 
-class LinkedList
-{
+class LinkedList {
 private:
     int size;
     Node* head;
 public:
-    LinkedList(); // Constructor
-    int length(); // Devuelve el largo de la lista
-    bool isEmpty(); // Revisa si la lista esta vacia
-    void insert(string data); // Inserta un elemento 
-    void print(); // Imprime todos los elementos
+    LinkedList();
+    int length();
+    bool isEmpty();
+    void insert(string data);
+    void print();
 };
 
 #endif

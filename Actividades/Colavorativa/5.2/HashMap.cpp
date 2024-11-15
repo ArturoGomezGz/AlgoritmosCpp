@@ -1,26 +1,25 @@
 #include "HashMap.h"
 
-HashMap::HashMap(){
+HashMap::HashMap() {
     this->size = 0;
     this->keys = nullptr;
 }
 
-int HashMap::lenght(){
+int HashMap::length() {
     return this->size;
 }
 
-bool HashMap::isEmpty(){
+bool HashMap::isEmpty() {
     return this->size == 0;
 }
 
-void HashMap::instert(string line){
+void HashMap::insert(string line) {
     string ip = this->getIp(line);
     MapNode* current = this->keys;
-    while (current != nullptr){
-
-        if (current->ip == ip){
+    while (current != nullptr) {
+        if (current->ip == ip) {
             current->insert(line);
-            return ;
+            return;
         }
         current = current->next;
     }
@@ -29,10 +28,9 @@ void HashMap::instert(string line){
 
 void HashMap::newIp(string ip) {
     if (this->isEmpty()) {
-        // Directly initialize the keys when the map is empty
         this->keys = new MapNode(ip);
     } else {
-        MapNode* node = new MapNode(ip); // Create the new MapNode only when needed
+        MapNode* node = new MapNode(ip);
         MapNode* current = this->keys;
         while (current->next != nullptr && current->next->ipLong < node->ipLong) {
             current = current->next;
@@ -40,12 +38,12 @@ void HashMap::newIp(string ip) {
         node->next = current->next;
         current->next = node;
     }
-    this->size++; // Increment size regardless of the condition
+    this->size++;
 }
 
-void HashMap::print(){
+void HashMap::print() {
     MapNode* current = keys;
-    while (current != nullptr){
+    while (current != nullptr) {
         current->print();
         current = current->next;
     }
@@ -58,24 +56,28 @@ string HashMap::getIp(string line) {
 
     while (iss >> word) {
         wordCount++;
-        if (wordCount == 4) { // El tercer espacio separa el 4to token
+        if (wordCount == 4) {
             size_t colonPos = word.find(':');
             if (colonPos != string::npos) {
-                return word.substr(0, colonPos); // Retorna solo la IP antes del ':'
+                return word.substr(0, colonPos);
             }
-            return word; // Si no hay ':', regresa el token completo
+            return word;
         }
     }
 
-    return ""; // Retorna una cadena vacía si no encuentra suficientes palabras
+    return "";
 }
 
-void HashMap::loadTxt(string file){
-    ifstream fileLine("./"+file+".txt");
+void HashMap::loadTxt(string file) {
+    ifstream fileLine("./" + file + ".txt");
+
+    if (!fileLine.is_open()) {
+        throw runtime_error("Could not open file");
+    }
 
     string line;
-    while (getline(fileLine, line))
-    {
-        this->instert(line);
+    while (getline(fileLine, line)) {
+        this->insert(line);
     }
+    fileLine.close();
 }
