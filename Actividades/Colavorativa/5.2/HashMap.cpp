@@ -14,24 +14,42 @@ bool HashMap::isEmpty(){
 }
 
 void HashMap::instert(string line){
+    string ip = this->getIp(line);
+    MapNode* current = this->keys;
+    while (current != nullptr){
 
+        if (current->ip == ip){
+            current->insert(line);
+            return ;
+        }
+        current = current->next;
+    }
+    newIp(ip);
 }
 
 void HashMap::newIp(string ip){
-    MapNode* node = 
+    MapNode* node = new MapNode(ip);
     if (this->isEmpty()){
         this->keys = new MapNode(ip);
         this->size++;
     } else {
         MapNode* current = this->keys;
-        while (current != nullptr){
-            if (current->ipLong >= )
-
+        while (current->next != nullptr && current->next->ipLong < node->ipLong) {
             current = current->next;
         }
+        node->next = current->next;
+        current->next = node;
     }
+    this->size++;
 }
 
+void HashMap::print(){
+    MapNode* current = keys;
+    while (current != nullptr){
+        current->print();
+        current = current->next;
+    }
+}
 
 string HashMap::getIp(string line) {
     istringstream iss(line);

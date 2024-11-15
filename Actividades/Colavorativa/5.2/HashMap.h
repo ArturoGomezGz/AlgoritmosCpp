@@ -52,6 +52,11 @@ struct MapNode
         }
         this->value->insert(data);
     }
+
+    void print(){
+        cout << this->ip << endl;
+        this->value->print();
+    }
 };
 
 class HashMap
@@ -66,6 +71,7 @@ public:
     void instert(string line);
     void newIp(string ip);
     string getIp(string line);
+    void print();
 };
 
 #endif
