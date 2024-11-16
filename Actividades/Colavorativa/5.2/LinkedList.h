@@ -29,8 +29,7 @@ struct Node {
         int minute = stoi(this->time.substr(3, 2));
         int second = stoi(this->time.substr(6, 2));
 
-        this->dateCompare = monthValue * 100000000 + this->day * 1000000 +
-                            hour * 10000 + minute * 100 + second;
+        this->dateCompare = monthValue * 100000000 + this->day * 1000000 + hour * 10000 + minute * 100 + second;
     }
 
     // Separa los elementos de una línea y los asigna a las propiedades del nodo.
