@@ -97,3 +97,32 @@ void HashMap::loadTxt(string file) {
     }
     fileLine.close();
 }
+
+void HashMap::consultar(){
+    bool contin = true;
+    while (contin){
+        string ip;
+        cout << "Que ip deseas consultar?" << endl;
+        cin >> ip;
+        MapNode* current = this->keys;
+        while (current != nullptr){
+            if (current->ip == ip){
+                break;
+            }
+            current = current->next;
+        }
+        if (current != nullptr){
+            current->print();
+        } else {
+            cout << "Ip no encontrada" << endl;
+        }
+        string opt;
+        cout << "Deseas hacer otra busqueda? Y/n" << endl;
+        cin >> opt;
+        if (opt == "n" || opt == "N"){
+            contin = false;
+        } else {
+            contin = true;
+        }
+    }
+}

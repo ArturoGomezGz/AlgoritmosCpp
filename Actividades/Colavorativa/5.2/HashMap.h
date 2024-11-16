@@ -97,6 +97,8 @@ public:
 
     void loadTxt(string file);
     // Carga líneas desde un archivo de texto y las inserta en el HashMap.
+
+    void consultar();
 };
 
 #endif
