@@ -93,3 +93,26 @@ void MyGraph::BFS(int nodeIndex)
         }
     }
 }
+
+
+/* int main() {
+    // Crear la matriz de adyacencia
+    vector<vector<int>> matriz = {
+        {0, 1, 1, 1, 0, 0},
+        {1, 0, 0, 0, 1, 0},
+        {1, 0, 0, 0, 0, 0},
+        {1, 0, 0, 0, 0, 0},
+        {0, 1, 0, 0, 0, 1},
+        {0, 0, 0, 0, 1, 0} 
+    };
+
+    MyGraph grafo(matriz);
+
+    cout << "Recorrido DFS:\n";
+    grafo.DFS(0);
+
+    cout << "\nRecorrido BFS:\n";
+    grafo.BFS(0);
+
+    return 0;
+} */
