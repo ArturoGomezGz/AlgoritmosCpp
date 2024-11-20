@@ -4,7 +4,8 @@ MyGraph::MyGraph(vector<vector<int>>& matriz)
 {
     this->size = matriz.size();
     this->nodes.resize(size);
-    loadGraph(matriz);
+    this->matriz = matriz;
+    loadGraph(this->matriz);
 }
 
 
