@@ -1,5 +1,7 @@
 #include "MyGraph.h"
 
+// Constructor que inicializa el grafo con una matriz de adyacencia
+// Complejidad: O(n^2)
 MyGraph::MyGraph(vector<vector<int>>& matriz)
 {
     this->size = matriz.size();
@@ -8,11 +10,12 @@ MyGraph::MyGraph(vector<vector<int>>& matriz)
     loadGraph(this->matriz);
 }
 
-
 MyGraph::~MyGraph()
 {
 }
 
+// Carga el grafo a partir de la matriz de adyacencia
+// Complejidad: O(n^2)
 void MyGraph::loadGraph(vector<vector<int>>& matriz)
 {
     for (int i = 0; i < size; i++)
@@ -35,6 +38,8 @@ void MyGraph::loadGraph(vector<vector<int>>& matriz)
     }
 }
 
+// Imprime el grafo mostrando los nodos y sus vecinos
+// Complejidad: O(n^2)
 void MyGraph::print()
 {
     for (int i = 0; i < this->size; i++)
@@ -48,12 +53,16 @@ void MyGraph::print()
     }
 }
 
+// Inicia el recorrido DFS desde un nodo
+// Complejidad: O(n)
 void MyGraph::DFS(int nodeIndex)
 {
     vector<bool> visitados(this->nodes.size(), false);
     DFS(nodeIndex, visitados);
 }
 
+// Realiza el recorrido DFS usando recursion
+// Complejidad: O(n)
 void MyGraph::DFS(int nodeIndex, vector<bool>& visitados)
 {
     visitados[nodeIndex] = true;
@@ -69,6 +78,8 @@ void MyGraph::DFS(int nodeIndex, vector<bool>& visitados)
     }
 }
 
+// Inicia el recorrido BFS desde un nodo
+// Complejidad: O(n)
 void MyGraph::BFS(int nodeIndex)
 {
     vector<bool> visitados(this->nodes.size(), false);
@@ -94,26 +105,3 @@ void MyGraph::BFS(int nodeIndex)
         }
     }
 }
-
-
-/* int main() {
-    // Crear la matriz de adyacencia
-    vector<vector<int>> matriz = {
-        {0, 1, 1, 1, 0, 0},
-        {1, 0, 0, 0, 1, 0},
-        {1, 0, 0, 0, 0, 0},
-        {1, 0, 0, 0, 0, 0},
-        {0, 1, 0, 0, 0, 1},
-        {0, 0, 0, 0, 1, 0} 
-    };
-
-    MyGraph grafo(matriz);
-
-    cout << "Recorrido DFS:\n";
-    grafo.DFS(0);
-
-    cout << "\nRecorrido BFS:\n";
-    grafo.BFS(0);
-
-    return 0;
-} */
