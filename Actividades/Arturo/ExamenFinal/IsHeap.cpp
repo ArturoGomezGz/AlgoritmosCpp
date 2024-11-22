@@ -25,7 +25,7 @@ bool isHeap(vector<int>& arreglo) {
     return isHeapRec(arreglo, 0);
 }
 
-int main() {
+/* int main() {
     vector<int> siHeap = {50, 30, 40, 10, 20, 35, 38, 5, 8, 15};
     vector<int> noHeap = {50, 30, 40, 10, 60, 35, 38, 5, 8, 15};
 
@@ -42,4 +42,4 @@ int main() {
     }
 
     return 0;
-}
+} */
