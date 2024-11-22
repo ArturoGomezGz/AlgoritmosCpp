@@ -3,7 +3,7 @@
 
 using namespace std;
 
-bool isHeapRec(vector<int>& arreglo, int i) {
+bool isHeap(vector<int>& arreglo, int i) {
     int size = arreglo.size();
 
     // El elemento es una hoja, hasta aqui llegó 
@@ -17,12 +17,12 @@ bool isHeapRec(vector<int>& arreglo, int i) {
     return 
         left && 
         right &&
-        isHeapRec(arreglo, 2 * i + 1) &&
-        isHeapRec(arreglo, 2 * i + 2);
+        isHeap(arreglo, 2 * i + 1) &&
+        isHeap(arreglo, 2 * i + 2);
 }
 
 bool isHeap(vector<int>& arreglo) {
-    return isHeapRec(arreglo, 0);
+    return isHeap(arreglo, 0);
 }
 
 /* int main() {
