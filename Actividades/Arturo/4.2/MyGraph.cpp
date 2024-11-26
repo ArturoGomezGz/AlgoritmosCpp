@@ -18,6 +18,7 @@ MyGraph::~MyGraph()
 // Complejidad: O(n^2)
 void MyGraph::loadGraph(vector<vector<int>>& matriz)
 {
+    this->puentes = 0;
     for (int i = 0; i < size; i++)
     {
         nodes[i] = new Node(i, {});
@@ -30,6 +31,7 @@ void MyGraph::loadGraph(vector<vector<int>>& matriz)
         {
             if (matriz[i][j] == 1)
             {
+                this->puentes = this->puentes+1;
                 vecinos++;
                 nodes[i]->neighbors.push_back(nodes[j]);
             }
@@ -106,4 +108,17 @@ void MyGraph::BFS(int nodeIndex)
     }
 }
 
-
+bool MyGraph::isTree()
+{
+    cout << this->size << this->puentes << endl;
+    // Verifica que el tamaño de la matriz es N y los puentes N-1
+    if (this->size == this->puentes+1){
+        for (int i = 0; i < this->size; i++){
+            // Verifica el root no tiene padre 
+            if (this->matriz[i][0] == 0){
+                return true;
+            }
+        }
+    }
+    return false;
+}

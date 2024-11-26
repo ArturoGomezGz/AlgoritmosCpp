@@ -35,6 +35,7 @@ private:
     vector<Node*> nodes;
     vector<vector<int>> matriz;
     int size;
+    int puentes;
 public:
     // Constructor que inicializa el grafo con una matriz de adyacencia
     MyGraph(vector<vector<int>>& matriz);
@@ -56,6 +57,10 @@ public:
 
     // Inicia el recorrido BFS desde un nodo
     void BFS(int nodeIndex);
+
+    // Is tree
+    bool isTree();
+
 };
 
 #endif

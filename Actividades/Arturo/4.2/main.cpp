@@ -2,17 +2,44 @@
 
 int main() {
     // Caso 1:
-    vector<vector<int>> matriz1 = {
-        {0, 1, 1, 0}, // Nodo 0
-        {1, 0, 0, 1}, // Nodo 1
-        {1, 0, 0, 0}, // Nodo 2
-        {0, 1, 0, 0}  // Nodo 3
+    vector<vector<int>> adjMatrixNonTree = {
+        {0, 1, 1, 0},
+        {1, 0, 1, 1},
+        {1, 1, 0, 1},
+        {0, 1, 1, 0}
     };
 
-    cout << "Caso 1: Grafo simple\n";
-    MyGraph grafo1 = MyGraph(matriz1);
-    cout << "Imprimiendo grafo:\n";
-    grafo1.print();
+    // Crear una matriz de adyacencia para un grafo que SÍ es un árbol
+    vector<vector<int>> adjMatrixTree = {
+        {0, 1, 1, 0},
+        {0, 0, 0, 1},
+        {0, 0, 0, 0},
+        {0, 0, 0, 0}
+    };
+    vector<vector<int>> adjMatrixNotTree = {
+        {0, 1, 0, 1},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1},
+        {1, 0, 0, 0}
+    };
+
+    MyGraph grafoTree = MyGraph(adjMatrixTree);
+    MyGraph grafoNonTree = MyGraph(adjMatrixNotTree);
+    /* cout << "Imprimiendo grafo:\n";
+    grafoTree.print(); */
+
+
+    if (grafoTree.isTree()){
+        cout << "Es arbol" << endl;
+    } else  {
+        cout << "No es arbol" << endl;
+    }
+
+    if (grafoNonTree.isTree()){
+        cout << "Es arbol" << endl;
+    } else  {
+        cout << "No es arbol" << endl;
+    }
 
     return 0;
 }
