@@ -1,6 +1,4 @@
 #include "node.h"
-#include <conio.h>
-
 
 class LinkedList
 {
@@ -141,7 +139,8 @@ void LinkedList::realizarBusqueda()
         }
 
         cout << "Deseas hacer otra busqueda? y/n" << endl;
-        char opt = _getch();
+        char opt;
+        cin >> opt;
         continuar = (opt == 'y');
     }
 }
