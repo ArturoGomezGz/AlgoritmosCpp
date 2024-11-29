@@ -108,17 +108,3 @@ void MyGraph::BFS(int nodeIndex)
     }
 }
 
-bool MyGraph::isTree()
-{
-    cout << this->size << this->puentes << endl;
-    // Verifica que el tamaño de la matriz es N y los puentes N-1
-    if (this->size == this->puentes+1){
-        for (int i = 0; i < this->size; i++){
-            // Verifica el root no tiene padre 
-            if (this->matriz[i][0] == 0){
-                return true;
-            }
-        }
-    }
-    return false;
-}
