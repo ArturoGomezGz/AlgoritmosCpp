@@ -17,9 +17,6 @@ class Lista {
         int getData(int position);
         int getSize();
         void print();
-        void add(int value); // New method
-        void remove(int value); // New method
-        bool contains(int value); // New method
 };
 
 #endif // LISTA_H
