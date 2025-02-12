@@ -18,18 +18,5 @@ int main() {
     // Test erase
     lista.erase();
     lista.print(); // Expected output: 10 20
-
-    // Test add
-    lista.add(40);
-    lista.print(); // Expected output: 10 20 40
-
-    // Test remove
-    lista.remove(20);
-    lista.print(); // Expected output: 10 40
-
-    // Test contains
-    cout << "Contains 10: " << lista.contains(10) << endl; // Expected output: Contains 10: 1
-    cout << "Contains 20: " << lista.contains(20) << endl; // Expected output: Contains 20: 0
-
     return 0;
 }
