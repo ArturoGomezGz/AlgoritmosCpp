@@ -12,10 +12,18 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: configure
-      run: ./configure
+      run: 
+        cd S4\Arturo\Actividades\Act1-1
+        ./configure
     - name: make
-      run: make
+      run: 
+        cd S4\Arturo\Actividades\Act1-1
+        make
     - name: make check
-      run: make check
+      run: 
+        cd S4\Arturo\Actividades\Act1-1
+        make check
     - name: make distcheck
-      run: make distcheck
+      run: 
+        cd S4\Arturo\Actividades\Act1-1
+        make distcheck
