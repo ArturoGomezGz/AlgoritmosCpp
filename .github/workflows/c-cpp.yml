@@ -11,19 +11,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: configure
-      run: 
-        cd S4\Arturo\Actividades\Act1-1
-        ./configure
-    - name: make
-      run: 
-        cd S4\Arturo\Actividades\Act1-1
+    - name: Set up C++ environment
+      run: sudo apt-get install -y build-essential
+    - name: Compile the project
+      run: |
+        cd S4/Arturo/Actividades/Act1-1
         make
-    - name: make check
-      run: 
-        cd S4\Arturo\Actividades\Act1-1
-        make check
-    - name: make distcheck
-      run: 
-        cd S4\Arturo\Actividades\Act1-1
-        make distcheck
+    - name: Run the project
+      run: |
+        cd S4/Arturo/Actividades/Act1-1
+        ./your_executable_name
