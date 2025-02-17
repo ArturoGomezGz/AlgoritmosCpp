@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -26,20 +27,26 @@ int fibonacciRecursivo(int n){
 
 // Calcula el promedio de un arreglo de enteros de manera iterativa
 // Espera un arreglo de enteros y su tamano, devuelve el promedio de los elementos
-int promedioIterativo(int arr[], int n){
+float promedioIterativo(vector<int> n){
     int suma = 0;
-    for(int i = 0; i < n; i++){
-        suma += arr[i];
+    int size = n.size();
+    for(int i = 0; i < size; i++){
+        suma += n[i];
     }
-    return suma/n;
+    return static_cast<float>(suma) / size;
 }
 
 // Calcula el promedio de un arreglo de enteros de manera recursiva
 // Espera un arreglo de enteros y su tamano, devuelve el promedio de los elementos
-int promedioRecursivo(int arr[], int n){
-    if(n == 0) return 0;
-    if(n == 1) return arr[0];
-    return (arr[n-1] + (promedioRecursivo(arr, n-1) * (n-1))) / n;
+float promedioRecursivoAux(vector<int> n, int size){
+    if(size == 0) return 0;
+    if(size == 1) return n[0];
+    return (n[size-1] + (promedioRecursivoAux(n, size-1) * (size-1))) / size;
+}
+
+float promedioRecursivo(vector<int> n){
+    int size = n.size();
+    return promedioRecursivoAux(n, size);
 }
 
 // Convierte una cadena de caracteres que representa un numero en un entero de manera iterativa
@@ -47,6 +54,10 @@ int promedioRecursivo(int arr[], int n){
 int strToIntIterativo(string str){
     int num = 0;
     for(int i = 0; i < str.size(); i++){
+        if(!isdigit(str[i])) {
+            cout << "Cadena invalida" << endl;
+            return -1; // Indicador de error
+        }
         num = num*10 + (str[i] - '0');
     }
     return num;
@@ -54,9 +65,19 @@ int strToIntIterativo(string str){
 
 // Convierte una cadena de caracteres que representa un numero en un entero de manera recursiva
 // Espera una cadena de caracteres y devuelve el numero entero correspondiente
-int strToIntRecursivo(string str){
+int strToIntRecursivoAux(string str){
     if(str.size() == 0) return 0;
-    return (str[0] - '0') + 10*strToIntRecursivo(str.substr(1));
+    if(!isdigit(str[0])) {
+        cout << "Cadena invalida" << endl;
+        return -1; // Indicador de error
+    }
+    return (str[0] - '0') + 10*strToIntRecursivoAux(str.substr(1));
+}
+
+int strToIntRecursivo(string str){
+    int res = strToIntRecursivoAux(str);
+    if (res <= 0) {return -1;}
+    else {return res;}
 }
 
 int main()
@@ -65,14 +86,18 @@ int main()
     cout << "Fibonacci Iterativo (5): " << fibonacciIterativo(8) << endl; // Espera 21
     cout << "Fibonacci Recursivo (5): " << fibonacciRecursivo(8) << endl; // Espera 21
 
-    int arr[] = {1, 2, 3, 4, 5};
-    int n = 5;
-    cout << "Promedio Iterativo: " << promedioIterativo(arr, n) << endl; // Espera 3
-    cout << "Promedio Recursivo: " << promedioRecursivo(arr, n) << endl; // Espera 3
+    vector<int> arr = {1, 2, 3, 4, 5, 5, 2, 2, 4, 22};
+    cout << "Promedio Iterativo: " << promedioIterativo(arr) << endl; // Espera 3
+    cout << "Promedio Recursivo: " << promedioRecursivo(arr) << endl; // Espera 3
 
     string str = "12345";
     cout << "String to Int Iterativo: " << strToIntIterativo(str) << endl; // Espera 12345
     cout << "String to Int Recursivo: " << strToIntRecursivo(str) << endl; // Espera 12345
+
+    // Caso de prueba con cadena invalida
+    string invalidStr = "12a45";
+    cout << "String to Int Iterativo (invalido): " << strToIntIterativo(invalidStr) << endl; // Espera "Cadena invalida"
+    cout << "String to Int Recursivo (invalido): " << strToIntRecursivo(invalidStr) << endl; // Espera "Cadena invalida"
 
     return 0;
 }
