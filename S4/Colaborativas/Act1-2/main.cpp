@@ -82,22 +82,37 @@ int strToIntRecursivo(string str){
 
 int main()
 {
-    // Casos de prueba para cada funcion
-    cout << "Fibonacci Iterativo (5): " << fibonacciIterativo(8) << endl; // Espera 21
-    cout << "Fibonacci Recursivo (5): " << fibonacciRecursivo(8) << endl; // Espera 21
+    // Casos de prueba para Fibonacci
+    cout << "Fibonacci Iterativo (10): " << fibonacciIterativo(10) << endl; // Espera 55
+    cout << "Fibonacci Iterativo (15): " << fibonacciIterativo(15) << endl; // Espera 610
+    cout << "Fibonacci Iterativo (30): " << fibonacciIterativo(30) << endl; // Espera 832040
 
-    vector<int> arr = {1, 2, 3, 4, 5, 5, 2, 2, 4, 22};
-    cout << "Promedio Iterativo: " << promedioIterativo(arr) << endl; // Espera 3
-    cout << "Promedio Recursivo: " << promedioRecursivo(arr) << endl; // Espera 3
+    cout << "Fibonacci Recursivo (10): " << fibonacciRecursivo(10) << endl; // Espera 55
+    cout << "Fibonacci Recursivo (15): " << fibonacciRecursivo(15) << endl; // Espera 610
+    cout << "Fibonacci Recursivo (30): " << fibonacciRecursivo(30) << endl; // Espera 832040
 
-    string str = "12345";
-    cout << "String to Int Iterativo: " << strToIntIterativo(str) << endl; // Espera 12345
-    cout << "String to Int Recursivo: " << strToIntRecursivo(str) << endl; // Espera 12345
+    // Casos de prueba para promedio
+    vector<int> arr1 = {1, 5, 10, 23, 56, 100};
+    vector<int> arr2 = {51, 35, 140, 323, 566, 1600, 231, 99, 1, 662};
 
-    // Caso de prueba con cadena invalida
-    string invalidStr = "12a45";
-    cout << "String to Int Iterativo (invalido): " << strToIntIterativo(invalidStr) << endl; // Espera "Cadena invalida"
-    cout << "String to Int Recursivo (invalido): " << strToIntRecursivo(invalidStr) << endl; // Espera "Cadena invalida"
+    cout << "Promedio Iterativo (arr1): " << promedioIterativo(arr1) << endl; // Espera 32.5
+    cout << "Promedio Iterativo (arr2): " << promedioIterativo(arr2) << endl; // Espera 370.8
+
+    cout << "Promedio Recursivo (arr1): " << promedioRecursivo(arr1) << endl; // Espera 32.5
+    cout << "Promedio Recursivo (arr2): " << promedioRecursivo(arr2) << endl; // Espera 370.8
+
+    // Casos de prueba para stringToInteger
+    string str1 = "345169";
+    string str2 = "89651472543";
+    string str3 = "123a456";
+
+    cout << "String to Int Iterativo (str1): " << strToIntIterativo(str1) << endl; // Espera 345169
+    cout << "String to Int Iterativo (str2): " << strToIntIterativo(str2) << endl; // Espera 89651472543
+    cout << "String to Int Iterativo (str3): " << strToIntIterativo(str3) << endl; // Espera "Cadena invalida"
+
+    cout << "String to Int Recursivo (str1): " << strToIntRecursivo(str1) << endl; // Espera 345169
+    cout << "String to Int Recursivo (str2): " << strToIntRecursivo(str2) << endl; // Espera 89651472543
+    cout << "String to Int Recursivo (str3): " << strToIntRecursivo(str3) << endl; // Espera "Cadena invalida"
 
     return 0;
 }
