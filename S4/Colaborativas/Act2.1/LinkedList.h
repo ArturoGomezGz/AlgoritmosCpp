@@ -196,9 +196,14 @@ public:
     // Encuentra el elemento en el medio de la lista
     // Complejidad: O(n)
     T findMidleElement() {
+        // Usamos tednica de doble puntero, tecnica aprendida con leetcode
+        // https://leetcode.com/problems/trapping-rain-water/description/
         Node<T>* slow = this->head;
         Node<T>* fast = this->head;
 
+        // Iteramos hasta que el puntero rápido llegue al final de la lista
+        // Al final, el puntero lento estará en el medio de la lista ya que se mueve a la mitad de la velocidad del puntero rápido
+        // En caso de que la lista tenga un número par de elementos, el puntero lento estará en el nodo de la izquierda
         while (fast != nullptr && fast->next != nullptr) {
             slow = slow->next;
             fast = fast->next->next;
