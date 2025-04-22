@@ -1,7 +1,50 @@
 #ifndef BST_CPP
 #define BST_CPP
 
-#include "BST.h"
+#include <iostream>
+#include <vector>
+#include <limits>
+#include <stdexcept>
+
+using namespace std;
+
+template <typename T>
+class Node {
+public:
+    T valor;
+    Node* left;
+    Node* right;
+
+    Node(T valor) : valor(valor), left(nullptr), right(nullptr) {}
+
+    void print() const {
+        cout << valor << " ";
+    }
+};
+
+template <typename T>
+class BST {
+private:
+    Node<T>* root;
+    int size;
+
+    int insertRec(Node<T>* current, Node<T>* newNode);
+    bool searchRec(Node<T>* current, T valor) const;
+    bool ancestorsRec(Node<T>* current, T valor);
+    int whatLevelAmIRec(Node<T>* current, T valor, int nivel);
+    void storeInorder(Node<T>* current, vector<T>& values);
+    void findIntersection(Node<T>* current, const BST<T>& otherBST, vector<T>& result) const;
+
+public:
+    BST();
+    int insert(T valor);
+    bool search(T valor) const;
+    bool isEmpty() const;
+    T minDifference();
+    int whatLevelAmI(T valor);
+    void ancestors(T valor);
+    vector<T> intersection(const BST<T>& otherBST);
+};
 
 template <typename T>
 BST<T>::BST() {

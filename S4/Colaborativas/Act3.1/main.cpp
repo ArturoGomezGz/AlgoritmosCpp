@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "BST.h"
+#include "BST.cpp"
 
 using namespace std;
 
