@@ -1,3 +1,12 @@
+// Arturo Gomez Gomez A07106692
+// Gonzalo Flores A01644771
+
+//Bibliografia:
+// https://www.geeksforgeeks.org/heap-sort/
+// https://www.youtube.com/watch?v=2DmK_H7IdTo
+
+// main.cpp creado con ayuda de Cloude 3.7 Sonnet
+
 #include <iostream>
 #include "BinaryHeap.h"
 
