@@ -6,6 +6,22 @@
 #include "ListaAdyacencias.h"
 #include "bfs_aux.h"
 
+// Arturo Gomez Gomez A07106692
+// Gonzalo Flores A01644771
+
+//Bibliografia:
+//GeeksforGeeks. (2023). Graph and its representations. Recuperado de https://www.geeksforgeeks.org/graph-and-its-representations/
+
+//TutorialsPoint. (n.d.). Graph Data Structure. Recuperado de https://www.tutorialspoint.com/data_structures_algorithms/graph_data_structure.htm
+
+//GeeksforGeeks. (2023). Binary Heap. Recuperado de https://www.geeksforgeeks.org/binary-heap/
+
+//Programiz. (n.d.). Breadth First Search (BFS) Algorithm. Recuperado de https://www.programiz.com/dsa/graph-bfs
+
+//GeeksforGeeks. (2023). Difference between Dijkstra's and BFS. Recuperado de https://www.geeksforgeeks.org/difference-between-dijkstras-and-bfs/
+
+//Brilliant.org. (n.d.). Breadth-First Search. Recuperado de https://brilliant.org/wiki/breadth-first-search-bfs/
+
 using namespace std;
 
 int main() {
