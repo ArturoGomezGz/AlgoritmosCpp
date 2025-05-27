@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 #include "Node.h"
 
 using namespace std;
@@ -75,11 +76,23 @@ public:
     int getNumeroNodos() const {
         return noNodos;
     }
-
-    void imprimir() const {
-        for (const Node* nodo : nodos) {
-            nodo->print();
+    
+    // Método para guardar los grados de salida en un archivo
+    bool guardarGradosSalida(const string& nombreArchivo) {
+        ofstream archivo(nombreArchivo);
+        
+        if (!archivo.is_open()) {
+            cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << endl;
+            return false;
         }
+        
+        // Escribir los pares (IP, grado de salida) en el archivo
+        for (const Node* nodo : nodos) {
+            archivo << nodo->ip.ipNoPrt << ", " << nodo->grado << endl;
+        }
+        
+        archivo.close();
+        return true;
     }
     
 };

@@ -127,6 +127,7 @@ struct Date {
 
 struct IpAddress {
     string ip;
+    string ipNoPrt; // IP address without the port
     int
         first,
         second,
@@ -148,6 +149,17 @@ struct IpAddress {
         }
         
         this->ip = ip;
+        
+        // Extract IP without port
+        size_t colonPos = ip.find(':');
+        if (colonPos != string::npos) {
+            ipNoPrt = ip.substr(0, colonPos);
+            // Extract port
+            port = stoi(ip.substr(colonPos + 1));
+        } else {
+            ipNoPrt = ip;
+        }
+        
         int size = ip.size();
 
         // Parse IP components
@@ -176,13 +188,13 @@ struct IpAddress {
                     size_t colonPos = segment.find(':');
                     if (colonPos != string::npos) {
                         fourth = stoi(segment.substr(0, colonPos));
-                        // port = stoi(segment.substr(colonPos + 1));
+                        // port already extracted above
                     } else {
                         fourth = value;
                         // Look for port after this segment
                         pos = nextPos + 1;
                         if (pos < ip.size() && ip[nextPos] == ':') {
-                            // port = stoi(ip.substr(pos));
+                            // port already extracted above
                         }
                     }
                     break;
@@ -198,7 +210,8 @@ struct IpAddress {
     
     IpAddress() {
         ip = "";
-        first = second = third = fourth = /*port =*/ 0;
+        ipNoPrt = "";
+        first = second = third = fourth = port = 0;
         ipComparableValue = 0;
     }
 

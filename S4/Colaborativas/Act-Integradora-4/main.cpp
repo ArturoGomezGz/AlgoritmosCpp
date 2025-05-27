@@ -36,7 +36,7 @@ int main() {
             cerr << "Error al insertar el registro: " << linea << endl;
         }
     }
-    lista.imprimir(); // Imprimimos la lista de adyacencias
+    lista.guardarGradosSalida("grados_ips.txt"); // Imprimimos la lista de adyacencias
 
     //cout << lista.getNodo(0)->registros[0]->value << endl; // Imprimimos la IP del primer nodo
 
