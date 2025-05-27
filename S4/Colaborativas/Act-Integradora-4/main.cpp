@@ -36,9 +36,9 @@ int main() {
             cerr << "Error al insertar el registro: " << linea << endl;
         }
     }
-    lista.print(); // Imprimimos la lista de adyacencias
+    lista.imprimir(); // Imprimimos la lista de adyacencias
 
-    cout << lista.getNodo(0)->registros[0].value << endl; // Imprimimos la IP del primer nodo
+    //cout << lista.getNodo(0)->registros[0]->value << endl; // Imprimimos la IP del primer nodo
 
     archivo.close(); // Cerramos el archivo
     return 0;

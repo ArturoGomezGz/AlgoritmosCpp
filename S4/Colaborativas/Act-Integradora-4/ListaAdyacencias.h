@@ -2,76 +2,75 @@
 #define LISTAADYACENCIAS_H
 
 #include <iostream>
-#include <vector>
+#include <map>
+#include <string>
 #include "Node.h"
 
 using namespace std;
 
-class ListaAdyacencias
-{
-public:
-    ListaAdyacencias(){
-        noNodos = 0; // Inicializa el contador de nodos a 0
+class ListaAdyacencias {
+private:
+    map<string, Node*> nodos; // clave: IP sin puerto (formato estandarizado)
+    int noNodos;
+
+    // Extrae la IP sin el puerto y le pone :0000
+    string normalizarIp(const string& ipConPuerto) {
+        size_t pos = ipConPuerto.find(':');
+        if (pos != string::npos) {
+            return ipConPuerto.substr(0, pos) + ":0000";
+        }
+        return ipConPuerto + ":0000"; // Si no tiene puerto, agrega ":0000"
     }
-    
+
+public:
+    ListaAdyacencias() {
+        noNodos = 0;
+    }
+
     ~ListaAdyacencias() {
-        // Liberar memoria de los nodos
-        for (Node* nodo : nodos) {
-            delete nodo;
+        for (auto& par : nodos) {
+            delete par.second;
         }
         nodos.clear();
     }
 
-    void insertarNodo(string registro){
-        // Crea un nuevo nodo con la IP del registro
-        Node* nuevoNodo = new Node(registro);
-        
-        // Buscar la posición correcta según ipComparableValue
-        for (auto it = nodos.begin(); it != nodos.end(); ++it) {
-            if (nuevoNodo->ip.ipComparableValue < (*it)->ip.ipComparableValue) {
-                // Insertar el nodo en la posición encontrada
-                nodos.insert(it, nuevoNodo);
-                noNodos++;
-                return;
-            }
-        }
-        
-        // Si llegamos aquí, el nodo debe ir al final
-        nodos.push_back(nuevoNodo);
+    void insertarNodo(const string& ipAddress) {
+        string ipNormalizada = normalizarIp(ipAddress);
+        if (nodos.find(ipNormalizada) != nodos.end()) return;
+
+        Node* nuevoNodo = new Node(ipNormalizada);
+        nodos[ipNormalizada] = nuevoNodo;
         noNodos++;
     }
 
-    int insertarRegistro(string registro) {
-        Registro nuevoRegistro(registro);
-        // Buscar el nodo correspondiente a la IP del registro
-        for (Node* nodo : nodos) {
-            if (nodo->ip.ipComparableValue == nuevoRegistro.origen.ipComparableValue) {
-                nodo->insertRegistro(registro);
-                return 1; // Registro insertado correctamente
-            }
+    int insertarRegistro(const string& registroStr) {
+        Registro* nuevoRegistro = new Registro(registroStr);
+        string ipOriginal = nuevoRegistro->origen.ip;
+        string ipNormalizada = normalizarIp(ipOriginal);
+        delete nuevoRegistro; // Ya no lo necesitamos, Node hará su propio Registro*
+
+        auto it = nodos.find(ipNormalizada);
+        if (it != nodos.end()) {
+            it->second->insertRegistro(registroStr);
+        } else {
+            Node* nuevoNodo = new Node(ipNormalizada);
+            nuevoNodo->insertRegistro(registroStr);
+            nodos[ipNormalizada] = nuevoNodo;
+            noNodos++;
         }
-        // Si no se encontró el nodo se retorna 0
-        return 0;
+
+        return 1;
     }
 
-    void print() {
-        cout << "Lista de adyacencias:" << endl;
-        for (Node* nodo : nodos) {
-            cout << "IP: " << nodo->ip.ip << endl;
-            nodo->print();
-        }
+    int getNumeroNodos() const {
+        return noNodos;
     }
 
-    Node* getNodo(int index) {
-        if (index < 0 || index >= noNodos) {
-            return nullptr; // Retorna nullptr si el índice es inválido
+    void imprimir() const {
+        for (const auto& par : nodos) {
+            par.second->print();
         }
-        return nodos[index]; // Retorna el nodo en la posición indicada
     }
-
-private:
-    vector<Node*> nodos; // Vector de punteros a nodos
-    int noNodos; // Cantidad de nodos en la lista de adyacencias
 };
 
-#endif //LISTAADYACENCIAS_H
+#endif // LISTAADYACENCIAS_H
