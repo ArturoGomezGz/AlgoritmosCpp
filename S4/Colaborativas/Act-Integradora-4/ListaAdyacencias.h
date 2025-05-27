@@ -4,6 +4,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <vector>
 #include "Node.h"
 
 using namespace std;
@@ -20,6 +21,18 @@ private:
             return ipConPuerto.substr(0, pos) + ":0000";
         }
         return ipConPuerto + ":0000"; // Si no tiene puerto, agrega ":0000"
+    }
+
+    // Bubble sort para ordenar vector<Node*> por grado descendente
+    void bubbleSortPorGradoDesc(vector<Node*>& nodosVec) const {
+        size_t n = nodosVec.size();
+        for (size_t i = 0; i < n; ++i) {
+            for (size_t j = 0; j < n - 1 - i; ++j) {
+                if (nodosVec[j]->grado < nodosVec[j + 1]->grado) {
+                    swap(nodosVec[j], nodosVec[j + 1]);
+                }
+            }
+        }
     }
 
 public:
@@ -71,6 +84,41 @@ public:
             par.second->print();
         }
     }
+
+    // Método para imprimir el top N nodos con mayor grado
+    void imprimirTopNodosPorGrado(int top) const {
+        vector<Node*> nodosVector;
+        for (const auto& par : nodos) {
+            nodosVector.push_back(par.second);
+        }
+
+        bubbleSortPorGradoDesc(nodosVector);
+
+        if (top > (int)nodosVector.size()) {
+            top = nodosVector.size();
+        }
+
+        for (int i = 0; i < top; ++i) {
+            nodosVector[i]->print();
+        }
+    }
+
+    vector<Node*> obtenerTopNodosPorGrado(int top) const {
+        vector<Node*> nodosVector;
+        for (const auto& par : nodos) {
+            nodosVector.push_back(par.second);
+        }
+
+        bubbleSortPorGradoDesc(nodosVector);
+
+        if (top > (int)nodosVector.size()) {
+            top = nodosVector.size();
+        }
+
+        nodosVector.resize(top);
+        return nodosVector;
+    }
+
 };
 
 #endif // LISTAADYACENCIAS_H
