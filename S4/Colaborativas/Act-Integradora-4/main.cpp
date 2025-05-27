@@ -1,8 +1,10 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
-#include <vector>
+#include <unordered_map>
 #include "ListaAdyacencias.h"
+#include "bfs_aux.h"
 
 using namespace std;
 
@@ -16,11 +18,9 @@ int main() {
     }
 
     string linea;
-
-    getline(archivo, linea); // Leemos la primera línea del archivo
-
     int noNodos, noRegistros;
 
+    getline(archivo, linea);
     istringstream stream(linea);
     stream >> noNodos >> noRegistros;
 
@@ -28,18 +28,60 @@ int main() {
 
     for (int i = 0; i < noNodos; ++i) {
         getline(archivo, linea);
-        lista.insertarNodo(linea); // Insertamos cada nodo en la lista de adyacencias
+        lista.insertarNodo(linea);
     }
+
     for (int i = 0; i < noRegistros; ++i) {
         getline(archivo, linea);
         if (!lista.insertarRegistro(linea)) {
             cerr << "Error al insertar el registro: " << linea << endl;
         }
     }
-    lista.guardarGradosSalida("grados_ips.txt"); // Imprimimos la lista de adyacencias
 
-    //cout << lista.getNodo(0)->registros[0]->value << endl; // Imprimimos la IP del primer nodo
+    archivo.close();
 
-    archivo.close(); // Cerramos el archivo
+    // Guardar grados de salida de cada IP
+    guardarGrados(lista.getNodos());
+
+    // Obtener las top 5 IPs con mayor grado de salida
+    vector<Node*> top5 = obtenerTopConHeap(lista.getNodos(), 5);
+
+    if (top5.empty()) {
+        cerr << "No se pudo identificar un bot master." << endl;
+        return 1;
+    }
+
+    string ipBotMaster = top5[0]->ip.ip;
+    cout << "Bot master: " << ipBotMaster << endl;
+
+    // Imprimir primera conexión del bot master
+    if (!top5[0]->registros.empty()) {
+        Registro* primero = top5[0]->registros[0];
+        cout << "Primera conexión: " << primero->date.month << " " 
+        << primero->date.day << " "
+        << (primero->time.hour < 10 ? "0" : "") << primero->time.hour << ":"
+        << (primero->time.minute < 10 ? "0" : "") << primero->time.minute << ":"
+        << (primero->time.second < 10 ? "0" : "") << primero->time.second << endl;
+    }
+
+    unordered_map<string, int> distancias;
+    unordered_map<string, string> padres;
+
+    bfsDesdeIP(lista, ipBotMaster, distancias, padres);
+    guardarDistancias(distancias);
+
+    // Encontrar la IP más lejana
+    string ipMasLejana;
+    int maxDist = -1;
+    for (const auto& par : distancias) {
+        if (par.second > maxDist) {
+            maxDist = par.second;
+            ipMasLejana = par.first;
+        }
+    }
+
+    cout << "IP más lejana: " << ipMasLejana << " a distancia " << maxDist << endl;
+    guardarCamino(padres, ipMasLejana);
+
     return 0;
 }

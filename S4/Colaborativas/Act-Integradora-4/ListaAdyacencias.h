@@ -2,16 +2,16 @@
 #define LISTAADYACENCIAS_H
 
 #include <iostream>
-#include <vector>
+#include <map>
 #include <string>
-#include <fstream>
+#include <vector>
 #include "Node.h"
 
 using namespace std;
 
 class ListaAdyacencias {
 private:
-    vector<Node*> nodos; // vector de nodos en lugar de map
+    map<string, Node*> nodos; // clave: IP sin puerto (formato estandarizado)
     int noNodos;
 
     // Extrae la IP sin el puerto y le pone :0000
@@ -22,15 +22,17 @@ private:
         }
         return ipConPuerto + ":0000"; // Si no tiene puerto, agrega ":0000"
     }
-    
-    // Método auxiliar para buscar un nodo por IP
-    Node* buscarNodo(const string& ip) {
-        for (Node* nodo : nodos) {
-            if (nodo->ip.ip == ip) {
-                return nodo;
+
+    // Bubble sort para ordenar vector<Node*> por grado descendente
+    void bubbleSortPorGradoDesc(vector<Node*>& nodosVec) const {
+        size_t n = nodosVec.size();
+        for (size_t i = 0; i < n; ++i) {
+            for (size_t j = 0; j < n - 1 - i; ++j) {
+                if (nodosVec[j]->grado < nodosVec[j + 1]->grado) {
+                    swap(nodosVec[j], nodosVec[j + 1]);
+                }
             }
         }
-        return nullptr;
     }
 
 public:
@@ -39,18 +41,22 @@ public:
     }
 
     ~ListaAdyacencias() {
-        for (Node* nodo : nodos) {
-            delete nodo;
+        for (auto& par : nodos) {
+            delete par.second;
         }
         nodos.clear();
     }
 
+    map<string, Node*>& getNodos() {
+    return nodos;
+}
+
     void insertarNodo(const string& ipAddress) {
         string ipNormalizada = normalizarIp(ipAddress);
-        if (buscarNodo(ipNormalizada) != nullptr) return;
+        if (nodos.find(ipNormalizada) != nodos.end()) return;
 
         Node* nuevoNodo = new Node(ipNormalizada);
-        nodos.push_back(nuevoNodo);
+        nodos[ipNormalizada] = nuevoNodo;
         noNodos++;
     }
 
@@ -60,13 +66,13 @@ public:
         string ipNormalizada = normalizarIp(ipOriginal);
         delete nuevoRegistro; // Ya no lo necesitamos, Node hará su propio Registro*
 
-        Node* nodoExistente = buscarNodo(ipNormalizada);
-        if (nodoExistente != nullptr) {
-            nodoExistente->insertRegistro(registroStr);
+        auto it = nodos.find(ipNormalizada);
+        if (it != nodos.end()) {
+            it->second->insertRegistro(registroStr);
         } else {
             Node* nuevoNodo = new Node(ipNormalizada);
             nuevoNodo->insertRegistro(registroStr);
-            nodos.push_back(nuevoNodo);
+            nodos[ipNormalizada] = nuevoNodo;
             noNodos++;
         }
 
@@ -76,25 +82,68 @@ public:
     int getNumeroNodos() const {
         return noNodos;
     }
-    
-    // Método para guardar los grados de salida en un archivo
-    bool guardarGradosSalida(const string& nombreArchivo) {
-        ofstream archivo(nombreArchivo);
-        
-        if (!archivo.is_open()) {
-            cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << endl;
-            return false;
+
+    void imprimir() const {
+        for (const auto& par : nodos) {
+            par.second->print();
         }
-        
-        // Escribir los pares (IP, grado de salida) en el archivo
-        for (const Node* nodo : nodos) {
-            archivo << nodo->ip.ipNoPrt << ", " << nodo->grado << endl;
-        }
-        
-        archivo.close();
-        return true;
     }
-    
+
+    // Método para imprimir el top N nodos con mayor grado
+    void imprimirTopNodosPorGrado(int top) const {
+        vector<Node*> nodosVector;
+        for (const auto& par : nodos) {
+            nodosVector.push_back(par.second);
+        }
+
+        bubbleSortPorGradoDesc(nodosVector);
+
+        if (top > (int)nodosVector.size()) {
+            top = nodosVector.size();
+        }
+
+        for (int i = 0; i < top; ++i) {
+            nodosVector[i]->print();
+        }
+    }
+
+    vector<Node*> obtenerTopNodosPorGrado(int top) const {
+        vector<Node*> nodosVector;
+        for (const auto& par : nodos) {
+            nodosVector.push_back(par.second);
+        }
+
+        bubbleSortPorGradoDesc(nodosVector);
+
+        if (top > (int)nodosVector.size()) {
+            top = nodosVector.size();
+        }
+
+        nodosVector.resize(top);
+        return nodosVector;
+    }
+
+    Node* obtenerBotMaster() const {
+    Node* botMaster = nullptr;
+    int maxGrado = -1;
+
+    for (const auto& par : nodos) {
+        if (par.second->grado > maxGrado) {
+            maxGrado = par.second->grado;
+            botMaster = par.second;
+        }
+    }
+    return botMaster;
+}
+
+    Node* obtenerNodo(string ip) const {
+        string ipNormalizada = ip;
+        if (ip.find(":") == string::npos) ipNormalizada += ":0000";
+        else ipNormalizada = ip.substr(0, ip.find(":")) + ":0000";
+        auto it = nodos.find(ipNormalizada);
+        return (it != nodos.end()) ? it->second : nullptr;
+}
+
 };
 
 #endif // LISTAADYACENCIAS_H
